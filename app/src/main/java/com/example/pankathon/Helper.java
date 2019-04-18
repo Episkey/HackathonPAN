@@ -70,6 +70,8 @@ public class Helper {
         void onEggLoaded(List<Egg> eggList);
     }
 
+
+
     public Egg randomEgg(ArrayList<Egg> eggList) {
             Random r = new Random();
             int i = r.nextInt(((eggList.size() - 1) - 0) + (eggList.size() - 1) ) + 0;

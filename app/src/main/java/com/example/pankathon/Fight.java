@@ -1,5 +1,6 @@
 package com.example.pankathon;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -12,6 +13,10 @@ import android.widget.TextView;
 
 import java.io.IOException;
 
+import static com.example.pankathon.MainActivity.COOKER;
+import static com.example.pankathon.MainActivity.EGG;
+import static com.example.pankathon.MainActivity.SETTINGS;
+
 public class Fight extends AppCompatActivity {
 
     private TextView lifeCooker;
@@ -23,8 +28,10 @@ public class Fight extends AppCompatActivity {
     private ImageView cookerPicture;
     private ImageView ustensilPicture;
     private Button ustensilButton;
-    private Cooker cooker;
-    private Egg egg;
+    private Cooker etchebest;
+    private Egg randomEgg;
+    private Settings settings;
+
 
 
     static boolean victory;
@@ -48,7 +55,14 @@ public class Fight extends AppCompatActivity {
 
     }
 
-    public void initialization(){
+    private void fromActivityFight(){
+        Intent receiveMainActivity = getIntent();
+        settings = receiveMainActivity.getParcelableExtra(SETTINGS);
+        etchebest  = receiveMainActivity.getParcelableExtra(COOKER);
+        randomEgg = receiveMainActivity.getParcelableExtra(EGG);
+    }
+
+    private void initialization(){
 
 
         new android.os.Handler().postDelayed(
@@ -57,9 +71,9 @@ public class Fight extends AppCompatActivity {
 
 
 
-                        Uri ustensilView = Uri.parse(cooker.getUstensil().get(0).getPicture());
-                        Uri eggView = Uri.parse(egg.getPicture());
-                        Uri cookerView = Uri.parse(cooker.getPicture());
+                        Uri ustensilView = Uri.parse(etchebest.getUstensil().get(0).getPicture());
+                        Uri eggView = Uri.parse(randomEgg.getPicture());
+                        Uri cookerView = Uri.parse(etchebest.getPicture());
 
                         Bitmap bitmap = null;
                         try {
@@ -101,11 +115,11 @@ public class Fight extends AppCompatActivity {
 
                         cookerPicture.setImageBitmap(bitmap);
 
-                        lifeCooker.setText(Integer.toString(cooker.getLife()));
-                        lifeEgg.setText(Integer.toString(egg.getLife()));
-                        ustensilName.setText(cooker.getUstensil().get(0).getName());
-                        cookerName.setText(cooker.getUstensil().get(0).getName());
-                        ustensilName.setText(egg.getName());
+                        lifeCooker.setText(Integer.toString(etchebest.getLife()));
+                        lifeEgg.setText(Integer.toString(randomEgg.getLife()));
+                        ustensilName.setText(etchebest.getUstensil().get(0).getName());
+                        cookerName.setText(etchebest.getUstensil().get(0).getName());
+                        ustensilName.setText(randomEgg.getName());
 
 
                     }
@@ -113,33 +127,33 @@ public class Fight extends AppCompatActivity {
                 11000);
     }
 
-    public void presentation() {
+    private void presentation() {
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText("You have encountered " + egg.getName());
+                        displayText.setText("You have encountered " + randomEgg.getName());
                     }
                 },
                 1000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText(egg.getName() + " does not like your face.");
+                        displayText.setText(randomEgg.getName() + " does not like your face.");
                     }
                 },
                 3000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText(egg.getName() + " does not like your face.");
+                        displayText.setText(randomEgg.getName() + " does not like your face.");
                     }
                 },
                 5000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText( egg.getName() + ". wants your money");
+                        displayText.setText( randomEgg.getName() + ". wants your money");
                     }
                 },
                 7000);
@@ -154,7 +168,7 @@ public class Fight extends AppCompatActivity {
     }
 
 
-    public void round(){
+    private void round(){
 
 
         new android.os.Handler().postDelayed(
