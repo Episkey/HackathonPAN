@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.io.IOException;
 import java.util.Random;
 
@@ -32,6 +34,7 @@ public class Fight extends AppCompatActivity {
     private Cooker etchebest;
     private Egg randomEgg;
     private Settings settings;
+    private TextView eggName;
 
 
 
@@ -49,6 +52,7 @@ public class Fight extends AppCompatActivity {
         cookerPicture =findViewById(R.id.ivCookerPicture);
         ustensilPicture =findViewById(R.id.ivUstensilPicture);
         displayText = findViewById(R.id.tvDialog);
+        eggName = findViewById(R.id.tvEggName);
 
         fromActivityFight();
         presentation();
@@ -74,7 +78,6 @@ public class Fight extends AppCompatActivity {
 
 
                         Uri ustensilView = Uri.parse(etchebest.getUstensil().getPicture());
-                        Uri eggView = Uri.parse(randomEgg.getPicture());
                         Uri cookerView = Uri.parse(etchebest.getPicture());
 
                         Bitmap bitmap = null;
@@ -89,19 +92,7 @@ public class Fight extends AppCompatActivity {
 
                         ustensilPicture.setImageBitmap(bitmap);
 
-
-                        bitmap = null;
-
-                        try {
-
-                            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), eggView);
-
-                        } catch (IOException e) {
-
-                            e.printStackTrace();
-                        }
-
-                        eggPicture.setImageBitmap(bitmap);
+                        Glide.with(Fight.this).load(randomEgg.getPicture()).into(eggPicture);
 
 
                         bitmap = null;
@@ -120,8 +111,9 @@ public class Fight extends AppCompatActivity {
                         lifeCooker.setText(Integer.toString(etchebest.getLife()));
                         lifeEgg.setText(Integer.toString(randomEgg.getLife()));
                         ustensilName.setText(etchebest.getUstensil().getName());
-                        cookerName.setText(etchebest.getUstensil().getName());
-                        ustensilName.setText(randomEgg.getName());
+                        cookerName.setText(etchebest.getName());
+                        eggName.setText(randomEgg.getName());
+
 
 
                     }

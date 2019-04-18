@@ -48,6 +48,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/tvDialog"
         app:layout_constraintEnd_toStartOf="@+id/ivCookerPicture" />
 
@@ -58,6 +60,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textSize="40sp"
         app:layout_constraintStart_toEndOf="@+id/ivEggPicture"
         app:layout_constraintTop_toTopOf="parent" />
 
