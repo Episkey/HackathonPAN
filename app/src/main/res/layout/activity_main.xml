@@ -4,15 +4,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@drawable/background"
+    tools:context=".MainActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <ImageButton
+        android:id="@+id/ibOcean"
+        android:layout_width="100dp"
+        android:layout_height="82dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/ocean"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ocean" />
+
+    <ImageButton
+        android:id="@+id/ibDesert"
+        android:layout_width="100dp"
+        android:layout_height="85dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="340dp"
+        android:contentDescription="@string/desert"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/desert" />
+
+    <ImageButton
+        android:id="@+id/ibforest"
+        android:layout_width="100dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginLeft="116dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/forest"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/ibDesert"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/forest" />
+
+    <ImageButton
+        android:id="@+id/ibCastle"
+        android:layout_width="93dp"
+        android:layout_height="102dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginBottom="68dp"
+        android:contentDescription="@string/castle"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/ibforest"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/dark_castle" />
+
+    <ImageButton
+        android:id="@+id/ibSky"
+        android:layout_width="102dp"
+        android:layout_height="96dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginRight="56dp"
+        android:layout_marginBottom="140dp"
+        android:contentDescription="@string/sky"
+        android:padding="0dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/ibOcean"
+        app:layout_constraintEnd_toStartOf="@+id/ibDesert"
+        app:srcCompat="@drawable/sky" />
 
 </android.support.constraint.ConstraintLayout>

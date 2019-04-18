@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Pankathon</string>
+    <string name="ocean">ocean</string>
+    <string name="desert">desert</string>
+    <string name="castle">castle</string>
+    <string name="forest">forest</string>
+    <string name="sky">sky</string>
 </resources>
