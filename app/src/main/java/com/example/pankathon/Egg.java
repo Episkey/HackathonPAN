@@ -1,7 +1,7 @@
 package com.example.pankathon;
 
 public class Egg {
-    private int id;
+    private String id;
     private String name;
     private String color;
     private String caliber;
@@ -12,7 +12,7 @@ public class Egg {
     private String power;
     private int life;
 
-    public Egg(int id, String name, String color, String caliber, int farming, String country, String rarity, String picture, String power, int life) {
+    public Egg(String id, String name, String color, String caliber, int farming, String country, String rarity, String picture, String power, int life) {
         this.id = id;
         this.name = name;
         this.color = color;
@@ -26,7 +26,7 @@ public class Egg {
     }
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -63,7 +63,7 @@ public class Egg {
         return life;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

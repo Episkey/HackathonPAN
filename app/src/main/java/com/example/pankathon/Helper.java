@@ -41,7 +41,13 @@ public class Helper {
                                 JSONObject egg = response.getJSONObject(i);
                                 String name = egg.getString("name");
                                 String image = egg.getString("image");
-
+                                String id = egg.getString("id");
+                                String color = egg.getString("color");
+                                String caliber = egg.getString("caliber");
+                                int farming = egg.getInt("farming");
+                                String country = egg.getString("country");
+                                String  rarity = egg.getString("rarity");
+                                String power = egg.getString("power");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
