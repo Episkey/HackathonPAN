@@ -192,20 +192,6 @@ public class Fight extends AppCompatActivity {
                 15000);
         Button attackUstensil = findViewById(R.id.bAttack);
 
-        attackUstensil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new android.os.Handler().postDelayed(
-                        new Runnable() {
-                            public void run() {
-                                randomEgg.setLife(randomEgg.getLife() - etchebest.getUstensil().getAttack());
-                                displayText.setText("You attack " + randomEgg.getName() + " and " + randomEgg.getName()+ );
-                            }
-
-                        },
-                        17000);
-            }
-        });
 
 
     }
