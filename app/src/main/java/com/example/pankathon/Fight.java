@@ -23,7 +23,7 @@ import static com.example.pankathon.MainActivity.SETTINGS;
 public class Fight extends AppCompatActivity {
 
     private TextView lifeCooker;
-    private TextView lifeEgg;
+    private static TextView lifeEgg;
     private TextView ustensilName;
     private TextView cookerName;
     private static TextView displayText;
@@ -188,25 +188,10 @@ public class Fight extends AppCompatActivity {
         attackUstensil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new android.os.Handler().postDelayed(
-                        new Runnable() {
-                            public void run() {
-                                attack();
-                            }
-                        },
-                        17000);
 
-                new android.os.Handler().postDelayed(
-                        new Runnable() {
-                            public void run() {
-                                if (!(randomEgg.getLife()==0)) {
-                                    attack();
-                                } else {
-                                    displayText.setText("You've got a " + randomEgg.getName() + ", congratulations !");
-                                }
-                            }
-                        },
-                        19000);
+                attack();
+
+                /**/
             }
         });
 
@@ -219,14 +204,46 @@ public class Fight extends AppCompatActivity {
             if (i<5) {
                 randomEgg.setLife(randomEgg.getLife() - etchebest.getUstensil().getAttack());
                 displayText.setText("You attack " + randomEgg.getName() + " and " + randomEgg.getName()+ " takes damages !");
+                lifeEgg.setText(Integer.toString(randomEgg.getLife()));
             }
             else {
                 displayText.setText("You attack " + randomEgg.getName() + " but " + randomEgg.getName()+ " dudges !");
             }
         }
         else {
-            randomEgg.setLife(0);
+            lifeEgg.setText(Integer.toString(0));
+            Uri eggBroken = Uri.parse("android.resource://com.example.pankathon/drawable/fatality");
+            Bitmap bitmap = null;
+            try {
+
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), eggBroken);
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+            }
+
+            eggPicture.setImageBitmap(bitmap);
             displayText.setText("You make a fatality on " + randomEgg.getName() + " !");
+            randomEgg.setLife(100);
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                                settings.getEggCaught().add(randomEgg);
+                                displayText.setText("You've got a " + randomEgg.getName() + ", congratulations !");
+
+                        }
+                    },
+                    2000);
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+
+                            Intent goToMainactivity = new Intent(Fight.this, MainActivity.class);
+                            startActivity(goToMainactivity);
+                        }
+                    },
+                    2000);
         }
 
     }

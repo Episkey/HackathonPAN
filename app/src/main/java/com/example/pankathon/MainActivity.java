@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Uri etchebestUri;
     private String etchebestString;
     private Cooker etchebest;
-    public Settings settings = new Settings(0);
+    public Settings settings = new Settings(0, null);
     private Egg randomEgg;
 
     @Override
