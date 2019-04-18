@@ -4,36 +4,35 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Egg implements Parcelable {
-    private int id;
-public class Egg {
-    private String id;
-    private String name;
-    private String color;
-    private String caliber;
-    private int farming;
-    private String country;
-    private String  rarity;
-    private String picture;
-    private String power;
-    private int life;
-
-    public Egg(String id, String name, String color, String caliber, int farming, String country, String rarity, String picture, String power, int life) {
-        this.id = id;
-        this.name = name;
-        this.color = color;
-        this.caliber = caliber;
-        this.farming = farming;
-        this.country = country;
-        this.rarity = rarity;
-        this.picture = picture;
-        this.power = power;
-        this.life = life;
-    }
 
 
-    public String getId() {
+        private String id;
+        private String name;
+        private String color;
+        private String caliber;
+        private int farming;
+        private String country;
+        private String rarity;
+        private String picture;
+        private String power;
+        private int life;
+
+        public Egg(String id, String name, String color, String caliber, int farming, String country, String rarity, String picture, String power, int life) {
+            this.id = id;
+            this.name = name;
+            this.color = color;
+            this.caliber = caliber;
+            this.farming = farming;
+            this.country = country;
+            this.rarity = rarity;
+            this.picture = picture;
+            this.power = power;
+            this.life = life;
+        }
+
+
     protected Egg(Parcel in) {
-        id = in.readInt();
+        id = in.readString();
         name = in.readString();
         color = in.readString();
         caliber = in.readString();
@@ -57,7 +56,7 @@ public class Egg {
         }
     };
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -85,6 +84,9 @@ public class Egg {
         return rarity;
     }
 
+    public String getPicture() {
+        return picture;
+    }
 
     public String getPower() {
         return power;
@@ -122,7 +124,9 @@ public class Egg {
         this.rarity = rarity;
     }
 
-
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
 
     public void setPower(String power) {
         this.power = power;
@@ -132,14 +136,6 @@ public class Egg {
         this.life = life;
     }
 
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -147,7 +143,7 @@ public class Egg {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeString(id);
         dest.writeString(name);
         dest.writeString(color);
         dest.writeString(caliber);
