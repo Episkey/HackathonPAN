@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 public class Egg implements Parcelable {
     private int id;
+public class Egg {
+    private String id;
     private String name;
     private String color;
     private String caliber;
@@ -15,7 +17,7 @@ public class Egg implements Parcelable {
     private String power;
     private int life;
 
-    public Egg(int id, String name, String color, String caliber, int farming, String country, String rarity, String picture, String power, int life) {
+    public Egg(String id, String name, String color, String caliber, int farming, String country, String rarity, String picture, String power, int life) {
         this.id = id;
         this.name = name;
         this.color = color;
@@ -29,6 +31,7 @@ public class Egg implements Parcelable {
     }
 
 
+    public String getId() {
     protected Egg(Parcel in) {
         id = in.readInt();
         name = in.readString();
@@ -91,7 +94,7 @@ public class Egg implements Parcelable {
         return life;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
