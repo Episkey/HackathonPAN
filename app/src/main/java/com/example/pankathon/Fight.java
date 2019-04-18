@@ -49,6 +49,7 @@ public class Fight extends AppCompatActivity {
         ustensilPicture =findViewById(R.id.ivUstensilPicture);
         displayText = findViewById(R.id.tvDialog);
 
+        fromActivityFight()
         presentation();
         initialization();
         round();
