@@ -1,6 +1,9 @@
 package com.example.pankathon;
 
-public class Egg {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Egg implements Parcelable {
     private int id;
     private String name;
     private String color;
@@ -25,6 +28,31 @@ public class Egg {
         this.life = life;
     }
 
+
+    protected Egg(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        color = in.readString();
+        caliber = in.readString();
+        farming = in.readInt();
+        country = in.readString();
+        rarity = in.readString();
+        picture = in.readString();
+        power = in.readString();
+        life = in.readInt();
+    }
+
+    public static final Creator<Egg> CREATOR = new Creator<Egg>() {
+        @Override
+        public Egg createFromParcel(Parcel in) {
+            return new Egg(in);
+        }
+
+        @Override
+        public Egg[] newArray(int size) {
+            return new Egg[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -107,5 +135,24 @@ public class Egg {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(color);
+        dest.writeString(caliber);
+        dest.writeInt(farming);
+        dest.writeString(country);
+        dest.writeString(rarity);
+        dest.writeString(picture);
+        dest.writeString(power);
+        dest.writeInt(life);
     }
 }

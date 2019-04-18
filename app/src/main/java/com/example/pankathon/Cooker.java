@@ -1,8 +1,11 @@
 package com.example.pankathon;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
-public class Cooker {
+public class Cooker implements Parcelable {
     private String name;
     private int life;
     private String picture;
@@ -16,6 +19,25 @@ public class Cooker {
         this.ustensil.add(ustensil);
         this.age = age;
     }
+
+    protected Cooker(Parcel in) {
+        name = in.readString();
+        life = in.readInt();
+        picture = in.readString();
+        age = in.readInt();
+    }
+
+    public static final Creator<Cooker> CREATOR = new Creator<Cooker>() {
+        @Override
+        public Cooker createFromParcel(Parcel in) {
+            return new Cooker(in);
+        }
+
+        @Override
+        public Cooker[] newArray(int size) {
+            return new Cooker[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -58,5 +80,18 @@ public class Cooker {
 
     public void setUstensil(ArrayList<Ustensil> ustensil) {
         this.ustensil = ustensil;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeInt(life);
+        dest.writeString(picture);
+        dest.writeInt(age);
     }
 }
