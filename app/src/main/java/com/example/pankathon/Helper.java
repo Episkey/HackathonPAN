@@ -1,16 +1,14 @@
 package com.example.pankathon;
 
 import android.content.Context;
-import android.location.Location;
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
+
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
@@ -19,15 +17,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Helper {
 
-    public static void extractEggs(Context context, final StationListener listener) {
+    public static void extractEggs(Context context, final EggListener listener) {
 
         final RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         String url = "http://easteregg.wildcodeschool.fr/api/eggs";
 
+        final List<Egg> eggList = new ArrayList<>();
         final JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -35,7 +35,6 @@ public class Helper {
                     @Override
                     public void onResponse(JSONArray response) {
 
-                        List<Egg> eggList = new ArrayList<>();
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject egg = response.getJSONObject(i);
@@ -59,7 +58,13 @@ public class Helper {
         requestQueue.add(jsonArrayRequest);
     }
 
-    public interface StationListener {
+    public interface EggListener {
         void onStationsLoaded(List<Egg> eggList);
+    }
+
+    public void randomEgg(eggList) {
+            Random r = new Random();
+            int i = r.nextInt(((eggList.size() - 1) - 0) + (eggList.size() - 1) ) + 0;
+            eggList[i];
     }
 }
