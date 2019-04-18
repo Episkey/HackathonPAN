@@ -1,6 +1,5 @@
 package com.example.pankathon;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -15,14 +14,17 @@ import java.io.IOException;
 
 public class Fight extends AppCompatActivity {
 
-    public TextView lifeCooker;
-    public TextView lifeEgg;
-    public TextView ustensilName;
-    public TextView cookerName;
-    public static TextView displayText;
-    public ImageView eggPicture;
-    public ImageView cookerPicture;
-    public ImageView ustensilPicture;
+    private TextView lifeCooker;
+    private TextView lifeEgg;
+    private TextView ustensilName;
+    private TextView cookerName;
+    private static TextView displayText;
+    private ImageView eggPicture;
+    private ImageView cookerPicture;
+    private ImageView ustensilPicture;
+    private Button ustensilButton;
+    private Cooker cooker;
+    private Egg egg;
 
 
     static boolean victory;
@@ -31,18 +33,22 @@ public class Fight extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
 
-        lifeCooker = findViewById(R.id.textView1);
-        lifeEgg = findViewById(R.id.textView2);
-        ustensilName = findViewById(R.id.textView3);
-        cookerName = findViewById(R.id.textView4);
-        eggPicture = findViewById(R.id.imageView1);
-        cookerPicture =findViewById((R.id.imageView2));
-        ustensilPicture =findViewById(R.id.imageView3);
-        displayText = findViewById(R.id.textView);
+        lifeCooker = findViewById(R.id.tvCookerLife);
+        lifeEgg = findViewById(R.id.tvEggLife);
+        ustensilName = findViewById(R.id.tvUstensilName);
+        cookerName = findViewById(R.id.tvCookerName);
+        eggPicture = findViewById(R.id.ivEggPicture);
+        cookerPicture =findViewById(R.id.ivCookerPicture);
+        ustensilPicture =findViewById(R.id.ivUstensilPicture);
+        displayText = findViewById(R.id.tvDialog);
+
+        presentation();
+        initialization();
+        round();
 
     }
 
-    public void initialization(final Cooker cooker, final Egg egg){
+    public void initialization(){
 
 
         new android.os.Handler().postDelayed(
@@ -107,12 +113,12 @@ public class Fight extends AppCompatActivity {
                 11000);
     }
 
-    public void presentation(final Cooker cooker, final Egg egg) {
+    public void presentation() {
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText("You have encountered " + bot.getName());
+                        displayText.setText("You have encountered " + egg.getName());
                     }
                 },
                 1000);
@@ -148,7 +154,7 @@ public class Fight extends AppCompatActivity {
     }
 
 
-    public static void round(final Cooker cooker, final Egg egg){
+    public void round(){
 
 
         new android.os.Handler().postDelayed(
@@ -173,30 +179,19 @@ public class Fight extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        Button weaponButton = context.findViewById(R.id.button2);
-                        Button spellButton = context.findViewById(R.id.button3);
-                        Button protectionButton = context.findViewById(R.id.button4);
+                        ustensilButton = findViewById(R.id.bAttack);
 
-                        weaponButton.setOnClickListener(new View.OnClickListener() {
+                        ustensilButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                int attackCharacter = (1 + charater.getCoefWeapon()/100)* charater.getWeapons().get(0).getAttack();
-                                bot.setLife(bot.getLife()-attackCharacter);
-                                texView.setText("You have inflected " + attackCharacter + " to " + bot.getName());
+
                                 new android.os.Handler().postDelayed(
                                         new Runnable() {
                                             public void run() {
-                                                texView.setText(bot.getName() +"is angry ! but he suffers");
-                                                lifeBot.setText(Integer.toString(bot.getLife()));
+
                                                 new android.os.Handler().postDelayed(
                                                         new Runnable() {
                                                             public void run() {
-                                                                int aleatoryResponse =(int)(Math.random()*2);
-                                                                int attackBot = (aleatoryResponse == 1) ? bot.getWeapons().get(0).getAttack()*(1 + bot.getCoefWeapon()/100) : bot.getSpells().get(0).getAttack()*(1 + bot.getCoefSpell()/100);
-                                                                String attackName = (aleatoryResponse == 1) ? bot.getWeapons().get(0).getWeaponName() : bot.getSpells().get(0).getSpellName();
-                                                                charater.setLife(charater.getLife()-attackBot);
-                                                                lifeCharacter.setText(Integer.toString(charater.getLife()));
-                                                                texView.setText("he has inflected " + attackBot + " to " + charater.getName()+ " with this " + attackName);
 
                                                             }
 
@@ -212,41 +207,6 @@ public class Fight extends AppCompatActivity {
                             }
                         });
 
-
-                        spellButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                int attackCharacter = (1 + charater.getCoefSpell()/100)* charater.getSpells().get(0).getAttack();
-                                bot.setLife(bot.getLife()-attackCharacter);
-                                texView.setText("You have inflected " + attackCharacter + " to " + bot.getName());
-                                new android.os.Handler().postDelayed(
-                                        new Runnable() {
-                                            public void run() {
-                                                texView.setText(bot.getName() +"is angry ! but he suffers");
-                                                lifeBot.setText(Integer.toString(bot.getLife()));
-                                                new android.os.Handler().postDelayed(
-                                                        new Runnable() {
-                                                            public void run() {
-                                                                int aleatoryResponse =(int)(Math.random()*2);
-                                                                int attackBot = (aleatoryResponse == 1) ? bot.getWeapons().get(0).getAttack()*(1 + bot.getCoefWeapon()/100) : bot.getSpells().get(0).getAttack()*(1 + bot.getCoefSpell()/100);
-                                                                String attackName = (aleatoryResponse == 1) ? bot.getWeapons().get(0).getWeaponName() : bot.getSpells().get(0).getSpellName();
-                                                                charater.setLife(charater.getLife()-attackBot);
-                                                                lifeCharacter.setText(Integer.toString(charater.getLife()));
-                                                                texView.setText("he has inflected " + attackBot + " to " + charater.getName()+ " with this " + attackName);
-
-                                                            }
-
-                                                        },
-                                                        2000);
-
-
-
-                                            }
-
-                                        },
-                                        2000);
-                            }
-                        });
 
                     }
                 },
