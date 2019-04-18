@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private String etchebestString;
     private Cooker etchebest;
     private Settings settings;
+    private Egg randomEgg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ustensilInitialisation();
         chiefInitialisation();
+        eggInitialisation();
     }
 
     private void ustensilInitialisation(){
@@ -45,15 +48,16 @@ public class MainActivity extends AppCompatActivity {
         Helper.extractEggs(this, new Helper.EggListener() {
             @Override
             public void onEggLoaded(List<Egg> eggList) {
-
+                randomEgg = Helper.randomEgg((ArrayList<Egg>) eggList);
             }
-        };)
+        });
     }
 
     public void toActivityFight(){
         Intent toActivityFight = new Intent(MainActivity.this, Fight.class);
         toActivityFight.putExtra(COOKER, (Parcelable) etchebest );
         toActivityFight.putExtra(SETTINGS, (Parcelable) settings );
+        toActivityFight.putExtra(EGG, (Parcelable) randomEgg );
         startActivity(toActivityFight);
     }
 
