@@ -52,7 +52,7 @@ public class Helper {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        listener.onStationsLoaded(eggList);
+                        listener.onEggLoaded(eggList);
                     }
                 },
                 new Response.ErrorListener() {
@@ -67,7 +67,7 @@ public class Helper {
     }
 
     public interface EggListener {
-        void onStationsLoaded(List<Egg> eggList);
+        void onEggLoaded(List<Egg> eggList);
     }
 
     public Egg randomEgg(ArrayList<Egg> eggList) {
