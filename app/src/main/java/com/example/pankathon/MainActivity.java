@@ -1,11 +1,9 @@
 package com.example.pankathon;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
-
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -17,9 +15,9 @@ import static com.example.pankathon.Helper.extractEggs;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String COOKER ="COOKER";
-    public static final String SETTINGS ="SETTINGS";
-    public static final String EGG ="EGG";
+    public static final String COOKER = "COOKER";
+    public static final String SETTINGS = "SETTINGS";
+    public static final String EGG = "EGG";
     private Ustensil whisk;
     private Uri whisktUri;
     private String whiskString;
@@ -28,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Cooker etchebest;
     public Settings settings = new Settings(0, null);
     private Egg randomEgg;
+    public static final String RETURN_SETTINGS = "RETURN_SETTINGS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +42,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ustensilInitialisation();
         chiefInitialisation();
         eggInitialisation();
+        if (!(settings.getWorld() == 0)) {
+            Intent intent = getIntent();
+            settings = intent.getParcelableExtra(RETURN_SETTINGS);
+
+        }
     }
 
     public void onClick(View v) {
-        switch(v.getId()) {
+        switch (v.getId()) {
             case R.id.ibOcean:
                 settings.setWorld(1);
                 toActivityFight(settings);
@@ -71,19 +75,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void ustensilInitialisation(){
+    private void ustensilInitialisation() {
         whisktUri = Uri.parse("android.resource://com.example.pankathon/drawable/whisk_picture");
         whiskString = whisktUri.toString();
-        whisk = new Ustensil( "Infernal Whisk", 20, whiskString);
+        whisk = new Ustensil("Infernal Whisk", 20, whiskString);
     }
 
-    private void chiefInitialisation(){
+    private void chiefInitialisation() {
         etchebestUri = Uri.parse("android.resource://com.example.pankathon/drawable/etchebestpicture");
         etchebestString = etchebestUri.toString();
-        etchebest = new Cooker("Chief Etchebest", 100, etchebestString,whisk,45);
+        etchebest = new Cooker("Chief Etchebest", 100, etchebestString, whisk, 45);
     }
 
-    private void eggInitialisation(){
+    private void eggInitialisation() {
         extractEggs(MainActivity.this, new Helper.EggListener() {
             @Override
             public void onEggLoaded(List<Egg> eggList) {
@@ -93,11 +97,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    public void toActivityFight(Settings settings){
+    public void toActivityFight(Settings settings) {
         Intent toActivityFight = new Intent(MainActivity.this, Fight.class);
-        toActivityFight.putExtra(COOKER, (Parcelable) etchebest );
-        toActivityFight.putExtra(SETTINGS, (Parcelable) settings );
-        toActivityFight.putExtra(EGG, (Parcelable) randomEgg );
+        toActivityFight.putExtra(COOKER, (Parcelable) etchebest);
+        toActivityFight.putExtra(SETTINGS, (Parcelable) settings);
+        toActivityFight.putExtra(EGG, (Parcelable) randomEgg);
         startActivity(toActivityFight);
     }
 

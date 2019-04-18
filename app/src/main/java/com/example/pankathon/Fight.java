@@ -3,6 +3,7 @@ package com.example.pankathon;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class Fight extends AppCompatActivity {
     private Egg randomEgg;
     private Settings settings;
     private TextView eggName;
+    public static final String RETURN_SETTINGS = "RETURN_SETTINGS";
 
 
 
@@ -188,10 +190,7 @@ public class Fight extends AppCompatActivity {
         attackUstensil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 attack();
-
-                /**/
             }
         });
 
@@ -240,6 +239,7 @@ public class Fight extends AppCompatActivity {
                         public void run() {
 
                             Intent goToMainactivity = new Intent(Fight.this, MainActivity.class);
+                            goToMainactivity.putExtra(RETURN_SETTINGS, (Parcelable) settings );
                             startActivity(goToMainactivity);
                         }
                     },
