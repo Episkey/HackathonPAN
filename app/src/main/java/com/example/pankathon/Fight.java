@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.Random;
 
 import static com.example.pankathon.MainActivity.COOKER;
 import static com.example.pankathon.MainActivity.EGG;
@@ -198,15 +199,43 @@ public class Fight extends AppCompatActivity {
                 new android.os.Handler().postDelayed(
                         new Runnable() {
                             public void run() {
-                                randomEgg.setLife(randomEgg.getLife() - etchebest.getUstensil().getAttack());
-                                displayText.setText("You attack " + randomEgg.getName() + " and " + randomEgg.getName()+ );
+                                attack();
                             }
-
                         },
                         17000);
+
+                new android.os.Handler().postDelayed(
+                        new Runnable() {
+                            public void run() {
+                                if (!(randomEgg.getLife()==0)) {
+                                    attack();
+                                } else {
+                                    displayText.setText("You've got a " + randomEgg.getName() + ", congratulations !");
+                                }
+                            }
+                        },
+                        19000);
             }
         });
 
+
+    }
+    public void attack() {
+        if (randomEgg.getLife() > etchebest.getUstensil().getAttack()) {
+            Random r = new Random();
+            int i = r.nextInt(10);
+            if (i<5) {
+                randomEgg.setLife(randomEgg.getLife() - etchebest.getUstensil().getAttack());
+                displayText.setText("You attack " + randomEgg.getName() + " and " + randomEgg.getName()+ " takes damages !");
+            }
+            else {
+                displayText.setText("You attack " + randomEgg.getName() + " but " + randomEgg.getName()+ " dudges !");
+            }
+        }
+        else {
+            randomEgg.setLife(0);
+            displayText.setText("You make a fatality on " + randomEgg.getName() + " !");
+        }
 
     }
 }
