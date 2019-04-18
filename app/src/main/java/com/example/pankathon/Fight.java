@@ -49,7 +49,7 @@ public class Fight extends AppCompatActivity {
         ustensilPicture =findViewById(R.id.ivUstensilPicture);
         displayText = findViewById(R.id.tvDialog);
 
-        fromActivityFight()
+        fromActivityFight();
         presentation();
         initialization();
         round();
@@ -72,7 +72,7 @@ public class Fight extends AppCompatActivity {
 
 
 
-                        Uri ustensilView = Uri.parse(etchebest.getUstensil().get(0).getPicture());
+                        Uri ustensilView = Uri.parse(etchebest.getUstensil().getPicture());
                         Uri eggView = Uri.parse(randomEgg.getPicture());
                         Uri cookerView = Uri.parse(etchebest.getPicture());
 
@@ -118,8 +118,8 @@ public class Fight extends AppCompatActivity {
 
                         lifeCooker.setText(Integer.toString(etchebest.getLife()));
                         lifeEgg.setText(Integer.toString(randomEgg.getLife()));
-                        ustensilName.setText(etchebest.getUstensil().get(0).getName());
-                        cookerName.setText(etchebest.getUstensil().get(0).getName());
+                        ustensilName.setText(etchebest.getUstensil().getName());
+                        cookerName.setText(etchebest.getUstensil().getName());
                         ustensilName.setText(randomEgg.getName());
 
 

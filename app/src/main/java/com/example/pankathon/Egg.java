@@ -30,6 +30,10 @@ public class Egg implements Parcelable {
             this.life = life;
         }
 
+        public Egg() {
+
+        }
+
 
     protected Egg(Parcel in) {
         id = in.readString();

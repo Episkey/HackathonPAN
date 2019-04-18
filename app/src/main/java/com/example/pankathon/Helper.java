@@ -1,7 +1,9 @@
 package com.example.pankathon;
 
+
 import android.content.Context;
 import android.util.Log;
+
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -10,8 +12,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,16 +38,18 @@ public class Helper {
 
                         try {
                             for (int i = 0; i < response.length(); i++) {
-                                JSONObject egg = response.getJSONObject(i);
-                                String name = egg.getString("name");
-                                String image = egg.getString("image");
-                                String id = egg.getString("id");
-                                String color = egg.getString("color");
-                                String caliber = egg.getString("caliber");
-                                int farming = egg.getInt("farming");
-                                String country = egg.getString("country");
-                                String  rarity = egg.getString("rarity");
-                                String power = egg.getString("power");
+                                JSONObject eggObject = response.getJSONObject(i);
+                                String name = eggObject.getString("name");
+                                String image = eggObject.getString("image");
+                                String id = eggObject.getString("id");
+                                String color = eggObject.getString("color");
+                                String caliber = eggObject.getString("caliber");
+                                int farming = eggObject.getInt("farming");
+                                String country = eggObject.getString("country");
+                                String  rarity = eggObject.getString("rarity");
+                                String power = eggObject.getString("power");
+                                Egg egg = new Egg(id, name, color, caliber, farming, country, rarity, image, power, 100);
+                                eggList.add(egg);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -74,7 +76,7 @@ public class Helper {
 
     public static Egg randomEgg(ArrayList<Egg> eggList) {
             Random r = new Random();
-            int i = r.nextInt(((eggList.size() - 1) - 0) + (eggList.size() - 1) ) + 0;
+            int i = r.nextInt(eggList.size());
             return eggList.get(i);
     }
 }
