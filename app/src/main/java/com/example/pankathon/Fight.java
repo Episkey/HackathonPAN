@@ -23,7 +23,7 @@ import static com.example.pankathon.MainActivity.SETTINGS;
 
 public class Fight extends AppCompatActivity {
 
-    private TextView lifeCooker;
+
     private static TextView lifeEgg;
     private TextView ustensilName;
     private TextView cookerName;
@@ -46,7 +46,7 @@ public class Fight extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
 
-        lifeCooker = findViewById(R.id.tvCookerLife);
+
         lifeEgg = findViewById(R.id.tvEggLife);
         ustensilName = findViewById(R.id.tvUstensilName);
         cookerName = findViewById(R.id.tvCookerName);
@@ -110,7 +110,7 @@ public class Fight extends AppCompatActivity {
 
                         cookerPicture.setImageBitmap(bitmap);
 
-                        lifeCooker.setText(Integer.toString(etchebest.getLife()));
+
                         lifeEgg.setText(Integer.toString(randomEgg.getLife()));
                         ustensilName.setText(etchebest.getUstensil().getName());
                         cookerName.setText(etchebest.getName());

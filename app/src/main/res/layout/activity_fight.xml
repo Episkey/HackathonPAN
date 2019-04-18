@@ -9,24 +9,33 @@
     <TextView
         android:id="@+id/tvDialog"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="170dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/border"
+        android:gravity="center"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvUstensilName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEggName" />
 
     <ImageView
         android:id="@+id/ivCookerPicture"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvDialog"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/bAttack"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/cooker" />
 
@@ -34,44 +43,35 @@
         android:id="@+id/ivEggPicture"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginLeft="116dp"
+        android:layout_marginTop="56dp"
+        android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/egg" />
 
     <TextView
-        android:id="@+id/tvCookerLife"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvDialog"
-        app:layout_constraintEnd_toStartOf="@+id/ivCookerPicture" />
-
-    <TextView
         android:id="@+id/tvEggLife"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
         android:gravity="center"
         android:textSize="40sp"
-        app:layout_constraintStart_toEndOf="@+id/ivEggPicture"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvEggName"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginLeft="116dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivEggPicture" />
 
@@ -79,9 +79,10 @@
         android:id="@+id/tvCookerName"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/ivCookerPicture"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -89,22 +90,24 @@
         android:id="@+id/ivUstensilPicture"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvDialog"
-        app:layout_constraintEnd_toStartOf="@+id/tvCookerLife"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/bAttack"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ustensile" />
 
     <TextView
         android:id="@+id/tvUstensilName"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginBottom="8dp"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/ivUstensilPicture"
-        app:layout_constraintEnd_toStartOf="@+id/tvCookerLife" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/bAttack"
@@ -114,8 +117,10 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvDialog"
-        app:layout_constraintEnd_toStartOf="@+id/ivUstensilPicture"
+        android:layout_marginBottom="16dp"
+        android:text="ATTACK"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>
