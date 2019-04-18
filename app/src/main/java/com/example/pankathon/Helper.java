@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Helper {
@@ -39,7 +40,8 @@ public class Helper {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject egg = response.getJSONObject(i);
                                 String name = egg.getString("name");
-                                Glide.with(Fight.class).load(egg.getString("image")).into(ivLogo);
+                                String image = egg.getString("image");
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -62,9 +64,9 @@ public class Helper {
         void onStationsLoaded(List<Egg> eggList);
     }
 
-    public void randomEgg(eggList) {
+    public Egg randomEgg(ArrayList<Egg> eggList) {
             Random r = new Random();
             int i = r.nextInt(((eggList.size() - 1) - 0) + (eggList.size() - 1) ) + 0;
-            eggList[i];
+            return eggList.get(i);
     }
 }
