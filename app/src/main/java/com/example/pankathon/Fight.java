@@ -15,14 +15,30 @@ import java.io.IOException;
 
 public class Fight extends AppCompatActivity {
 
+    public TextView lifeCooker;
+    public TextView lifeEgg;
+    public TextView ustensilName;
+    public TextView cookerName;
+    public static TextView displayText;
+    public ImageView eggPicture;
+    public ImageView cookerPicture;
+    public ImageView ustensilPicture;
+
+
     static boolean victory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
 
-
-
+        lifeCooker = findViewById(R.id.textView1);
+        lifeEgg = findViewById(R.id.textView2);
+        ustensilName = findViewById(R.id.textView3);
+        cookerName = findViewById(R.id.textView4);
+        eggPicture = findViewById(R.id.imageView1);
+        cookerPicture =findViewById((R.id.imageView2));
+        ustensilPicture =findViewById(R.id.imageView3);
+        displayText = findViewById(R.id.textView);
 
     }
 
@@ -33,9 +49,7 @@ public class Fight extends AppCompatActivity {
                 new Runnable() {
                     public void run() {
 
-                        ImageView eggPicture = findViewById(R.id.imageView1);
-                        ImageView cookerPicture =findViewById((R.id.imageView2));
-                        ImageView ustensilPicture =findViewById(R.id.imageView3);
+
 
                         Uri ustensilView = Uri.parse(cooker.getUstensil().get(0).getPicture());
                         Uri eggView = Uri.parse(egg.getPicture());
@@ -81,14 +95,11 @@ public class Fight extends AppCompatActivity {
 
                         cookerPicture.setImageBitmap(bitmap);
 
-                        TextView lifeCooker = findViewById(R.id.textView1);
-                        TextView lifeEgg = findViewById(R.id.textView2);
-                        TextView ustensilName = findViewById(R.id.button3);
-
-
                         lifeCooker.setText(Integer.toString(cooker.getLife()));
                         lifeEgg.setText(Integer.toString(egg.getLife()));
-                        ustensilName.setText(cooker.getUstensil().get(0));
+                        ustensilName.setText(cooker.getUstensil().get(0).getName());
+                        cookerName.setText(cooker.getUstensil().get(0).getName());
+                        ustensilName.setText(egg.getName());
 
 
                     }
@@ -96,40 +107,40 @@ public class Fight extends AppCompatActivity {
                 11000);
     }
 
-    public static void presentation(final Cooker cooker, final Egg egg) {
-        final TextView texView = (TextView) context.findViewById(R.id.textView);
+    public void presentation(final Cooker cooker, final Egg egg) {
+
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        texView.setText("You have encountered " + bot.getName());
+                        displayText.setText("You have encountered " + bot.getName());
                     }
                 },
                 1000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        texView.setText(bot.getName() + " does not like your face.");
+                        displayText.setText(egg.getName() + " does not like your face.");
                     }
                 },
                 3000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        texView.setText(bot.getName() + " does not like your face.");
+                        displayText.setText(egg.getName() + " does not like your face.");
                     }
                 },
                 5000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        texView.setText( bot.getName() + ". wants your money");
+                        displayText.setText( egg.getName() + ". wants your money");
                     }
                 },
                 7000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        texView.setText("You will have to fight to keep your money");
+                        displayText.setText("You will have to fight to keep your money");
                     }
                 },
                 9000);
@@ -138,14 +149,12 @@ public class Fight extends AppCompatActivity {
 
 
     public static void round(final Cooker cooker, final Egg egg){
-        final TextView texView = (TextView) context.findViewById(R.id.textView);
-        final TextView lifeBot = context.findViewById(R.id.textView6);
-        final TextView lifeCharacter = context.findViewById(R.id.textView7);
+
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        texView.setText("FIGHT COMMENCES !!!!");
+                        displayText.setText("FIGHT COMMENCES !!!!");
 
                     }
 
@@ -155,7 +164,7 @@ public class Fight extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        texView.setText("It's your turn. What do you want to do ?");
+                        displayText.setText("It's your turn. What do you want to do ?");
                     }
 
                 },
