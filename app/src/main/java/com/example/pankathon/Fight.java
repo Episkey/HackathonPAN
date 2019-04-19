@@ -189,22 +189,22 @@ public class Fight extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText(randomEgg.getName() + " is" + randomEgg.getRarity());
+                        displayText.setText(randomEgg.getName() + " is " + randomEgg.getRarity());
                     }
                 },
                 3000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText(randomEgg.getName() + " got the power." + randomEgg.getPower());
+                        displayText.setText(randomEgg.getName() + " has " + randomEgg.getPower());
                     }
                 },
                 5000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText(randomEgg.getName() + ". wants your money");
-                        displayText.setText( randomEgg.getName() + ". is going to escape");
+                        //displayText.setText(randomEgg.getName() + " wants your money");
+                        displayText.setText( randomEgg.getName() + " is going to escape");
                     }
                 },
                 7000);
@@ -224,7 +224,7 @@ public class Fight extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText("FIGHT COMMENCES !!!!");
+                        displayText.setText("FIGHT BEGINS !!!!");
 
                     }
 
