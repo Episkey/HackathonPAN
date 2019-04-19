@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Uri etchebestUri;
     private String etchebestString;
     private Cooker etchebest;
-    public Settings settings = new Settings(0, null);
+    public Settings settings;
     private Egg randomEgg;
     public static final String RETURN_SETTINGS = "RETURN_SETTINGS";
 
@@ -38,14 +38,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.ibforest).setOnClickListener(this);
         findViewById(R.id.ibCastle).setOnClickListener(this);
         findViewById(R.id.ibSky).setOnClickListener(this);
+        findViewById(R.id.ibListButton).setOnClickListener(this);
 
         ustensilInitialisation();
         chiefInitialisation();
         eggInitialisation();
-        if (!(settings.getWorld() == 0)) {
+
             Intent intent = getIntent();
             settings = intent.getParcelableExtra(RETURN_SETTINGS);
-
+        if(settings == null) {
+            settings = new Settings(0, null);
         }
     }
 
@@ -71,8 +73,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 settings.setWorld(5);
                 toActivityFight(settings);
                 break;
-        }
+            case R.id.ibListButton:
+                Intent goToListView = new Intent(MainActivity.this, ListViewScore.class);
+                goToListView.putExtra(RETURN_SETTINGS, (Parcelable) settings );
+                startActivity(goToListView);
+                break;
 
+        }
     }
 
     private void ustensilInitialisation() {

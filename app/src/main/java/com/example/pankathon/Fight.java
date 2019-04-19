@@ -163,7 +163,6 @@ public class Fight extends AppCompatActivity {
 
     }
 
-
     private void round(){
 
 
@@ -243,8 +242,7 @@ public class Fight extends AppCompatActivity {
                             startActivity(goToMainactivity);
                         }
                     },
-                    2000);
+                    4000);
         }
-
     }
 }

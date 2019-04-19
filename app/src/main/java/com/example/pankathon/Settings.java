@@ -45,7 +45,10 @@ public class Settings implements Parcelable {
 
     public Settings(int world, Egg egg) {
         this.world = world;
-        this.eggCaught.add(egg);
+        if(egg != null) {
+            this.eggCaught.add(egg);
+        }
+
     }
 
     @Override
