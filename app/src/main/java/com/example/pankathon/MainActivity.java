@@ -22,6 +22,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Uri whisktUri;
     private String whiskString;
     private Uri etchebestUri;
+    private Ustensil eggOven;
+    private Uri eggOventUri;
+    private String eggOvenString;
+    private Uri panUri;
+    private Ustensil pan;
+    private String panString;
     private String etchebestString;
     private Cooker etchebest;
     public Settings settings = new Settings(0, null);
@@ -79,6 +85,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         whisktUri = Uri.parse("android.resource://com.example.pankathon/drawable/whisk_picture");
         whiskString = whisktUri.toString();
         whisk = new Ustensil("Infernal Whisk", 20, whiskString);
+        eggOventUri = Uri.parse("android.resource://com.example.pankathon/drawable/eggoven");
+        eggOvenString = eggOventUri.toString();
+        eggOven= new Ustensil("Infernal Whisk", 40, eggOvenString);
+        panUri = Uri.parse("android.resource://com.example.pankathon/drawable/pan");
+        panString = panUri.toString();
+        pan= new Ustensil("Infernal Whisk", 35, panString);
     }
 
     private void chiefInitialisation() {
