@@ -87,6 +87,9 @@ public class Fight extends AppCompatActivity {
         if(settings.getWorld() == 5) {
             back.setBackgroundResource(R.drawable.sky);
         }
+        if(settings.getWorld() == 6) {
+            back.setBackgroundResource(R.drawable.easteregg);
+        }
         randomEgg = listFightingEggs.get(0);
         presentation();
         initialization();

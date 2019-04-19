@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,13 +43,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button buttonEasterEgg = findViewById(R.id.ibEasterEgg);
+        buttonEasterEgg.setVisibility(View.VISIBLE);
+        buttonEasterEgg.setBackgroundColor(Color.TRANSPARENT);
         findViewById(R.id.ibOcean).setOnClickListener(this);
         findViewById(R.id.ibDesert).setOnClickListener(this);
         findViewById(R.id.ibforest).setOnClickListener(this);
         findViewById(R.id.ibCastle).setOnClickListener(this);
         findViewById(R.id.ibSky).setOnClickListener(this);
         findViewById(R.id.ibListButton).setOnClickListener(this);
-        findViewById(R.id.ibEasterEgg).setOnClickListener(this);
+        buttonEasterEgg.setOnClickListener(this);
 
         ustensilInitialisation();
         chiefInitialisation();
@@ -91,9 +96,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(goToListView);
                 break;
             case R.id.ibEasterEgg:
-                Intent goToEasterEgg = new Intent(MainActivity.this, EasterEgg.class);
-                goToEasterEgg.putExtra(RETURN_SETTINGS, (Parcelable) settings );
-                startActivity(goToEasterEgg);
+                String id = "0";
+                String name = "Bastien";
+                String color = "white";
+                String caliber = "12";
+                int farming = 2;
+                String country = "x";
+                String rarity = "Ultimate boss";
+                Uri bastienUri = Uri.parse("android.resource://com.example.pankathon/drawable/bastien");
+                String bastienString = bastienUri.toString();
+                String power = "Android master";
+                int life = 1000;
+                randomEgg = new Egg(id, name, color, caliber, farming, country, rarity, bastienString, power, life);
+                listFightingEggs.clear();
+                listFightingEggs.add(randomEgg);
+                settings.setWorld(6);
+                toActivityFight(settings);
                 break;
         }
     }
