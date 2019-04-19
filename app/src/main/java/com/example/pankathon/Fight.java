@@ -5,11 +5,13 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,7 +25,6 @@ import static com.example.pankathon.MainActivity.EGG;
 import static com.example.pankathon.MainActivity.SETTINGS;
 
 public class Fight extends AppCompatActivity {
-
 
     private static TextView lifeEgg;
     private TextView ustensilName;
@@ -42,14 +43,13 @@ public class Fight extends AppCompatActivity {
     private ArrayList<Egg> listFightingEggs;
     private int currentEgg =0;
 
-
     static boolean victory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
-
+        ConstraintLayout back = (ConstraintLayout) findViewById(R.id.clforBack);
 
         lifeEgg = findViewById(R.id.tvEggLife);
         ustensilName = findViewById(R.id.tvUstensilName);
@@ -62,7 +62,23 @@ public class Fight extends AppCompatActivity {
         buttonReturn = findViewById(R.id.buttonReturn);
 
 
+
         fromActivityFight();
+        if(settings.getWorld() == 1) {
+            back.setBackgroundResource(R.drawable.ocean);
+        }
+        if(settings.getWorld() == 2) {
+            back.setBackgroundResource(R.drawable.desert);
+        }
+        if(settings.getWorld() == 3) {
+            back.setBackgroundResource(R.drawable.forest);
+        }
+        if(settings.getWorld() == 4) {
+            back.setBackgroundResource(R.drawable.dark_castle);
+        }
+        if(settings.getWorld() == 5) {
+            back.setBackgroundResource(R.drawable.sky);
+        }
         randomEgg = listFightingEggs.get(0);
         presentation();
         initialization();
@@ -91,7 +107,6 @@ public class Fight extends AppCompatActivity {
                 new Runnable() {
                     public void run() {
 
-
                         Uri ustensilView = Uri.parse(etchebest.getUstensil().getPicture());
                         Uri cookerView = Uri.parse(etchebest.getPicture());
 
@@ -109,7 +124,6 @@ public class Fight extends AppCompatActivity {
 
                         Glide.with(Fight.this).load(randomEgg.getPicture()).into(eggPicture);
 
-
                         bitmap = null;
 
                         try {
@@ -120,15 +134,12 @@ public class Fight extends AppCompatActivity {
 
                             e.printStackTrace();
                         }
-
                         cookerPicture.setImageBitmap(bitmap);
-
 
                         lifeEgg.setText(Integer.toString(randomEgg.getLife()));
                         ustensilName.setText(etchebest.getUstensil().getName());
                         cookerName.setText(etchebest.getName());
                         eggName.setText(randomEgg.getName());
-
 
                     }
                 },
@@ -175,9 +186,7 @@ public class Fight extends AppCompatActivity {
 
     }
 
-
-    private void round() {
-
+    private void round(){
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -205,7 +214,6 @@ public class Fight extends AppCompatActivity {
                 attack();
             }
         });
-
 
     }
 

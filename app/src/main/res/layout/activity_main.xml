@@ -92,13 +92,19 @@
     <ImageButton
         android:id="@+id/ibListButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:background="@android:drawable/presence_invisible"
+        android:contentDescription="TODO"
+        android:cropToPadding="true"
+        android:scaleType="fitCenter"
+        android:visibility="visible"
+        app:barrierAllowsGoneWidgets="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/btn_star_big_on"
-        android:contentDescription="TODO" />
+        app:srcCompat="@android:drawable/btn_star_big_on" />
 
 </android.support.constraint.ConstraintLayout>
