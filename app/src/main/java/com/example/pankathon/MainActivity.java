@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Uri bastienUri = Uri.parse("android.resource://com.example.pankathon/drawable/bastien");
                 String bastienString = bastienUri.toString();
                 String power = "Android master";
-                int life = 100;
+                int life = 500;
                 randomEgg = new Egg(id, name, color, caliber, farming, country, rarity, bastienString, power, life);
                 listFightingEggs.clear();
                 listFightingEggs.add(randomEgg);
