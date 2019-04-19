@@ -1,11 +1,13 @@
 package com.example.pankathon;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ustensilInitialisation();
         chiefInitialisation();
         eggInitialisation();
+        invisibleButton();
         if (!(settings.getWorld() == 0)) {
             Intent intent = getIntent();
             settings = intent.getParcelableExtra(RETURN_SETTINGS);
@@ -70,9 +73,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 toActivityFight(settings);
                 break;
             case R.id.ibCastle:
-                settings.setWorld(4);
-                toActivityFight(settings);
-                break;
+                if (settings.getEggCaught().size() > 4) {
+                    settings.setWorld(4);
+                    toActivityFight(settings);
+                    break;
+                }
             case R.id.ibSky:
                 settings.setWorld(5);
                 toActivityFight(settings);
@@ -87,16 +92,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         whisk = new Ustensil("Infernal Whisk", 20, whiskString);
         eggOventUri = Uri.parse("android.resource://com.example.pankathon/drawable/eggoven");
         eggOvenString = eggOventUri.toString();
-        eggOven= new Ustensil("Infernal Whisk", 40, eggOvenString);
+        eggOven= new Ustensil("Devil Egg Oven", 40, eggOvenString);
         panUri = Uri.parse("android.resource://com.example.pankathon/drawable/pan");
         panString = panUri.toString();
-        pan= new Ustensil("Infernal Whisk", 35, panString);
+        pan= new Ustensil("Pan of Doom", 35, panString);
     }
 
     private void chiefInitialisation() {
         etchebestUri = Uri.parse("android.resource://com.example.pankathon/drawable/etchebestpicture");
         etchebestString = etchebestUri.toString();
         etchebest = new Cooker("Chief Etchebest", 100, etchebestString, whisk, 45);
+        etchebest.getUstensil().add(eggOven);
+        etchebest.getUstensil().add(pan);
     }
 
     private void eggInitialisation() {
@@ -104,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onEggLoaded(List<Egg> eggList) {
                 randomEgg = Helper.randomEgg((ArrayList<Egg>) eggList);
-                System.out.print(randomEgg.getName());
             }
         });
     }
@@ -115,6 +121,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toActivityFight.putExtra(SETTINGS, (Parcelable) settings);
         toActivityFight.putExtra(EGG, (Parcelable) randomEgg);
         startActivity(toActivityFight);
+    }
+
+    private void invisibleButton(){
+        Button easterEggg = (Button)findViewById(R.id.easterEggg);
+        easterEggg.setVisibility(View.VISIBLE);
+        easterEggg.setBackgroundColor(Color.TRANSPARENT);
+
+        easterEggg.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
     }
 
     @Override

@@ -8,13 +8,18 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import static com.example.pankathon.MainActivity.COOKER;
@@ -25,18 +30,20 @@ public class Fight extends AppCompatActivity {
 
 
     private static TextView lifeEgg;
-    private TextView ustensilName;
+    private  TextView ustensilName;
     private TextView cookerName;
     private static TextView displayText;
     private ImageView eggPicture;
     private ImageView cookerPicture;
     private ImageView ustensilPicture;
-    private Button ustensilButton;
     private Cooker etchebest;
     private Egg randomEgg;
     private Settings settings;
     private TextView eggName;
     public static final String RETURN_SETTINGS = "RETURN_SETTINGS";
+    private String[] ustensilTable = new String[3];
+    private ListView listView;
+    private static int lastPosition = 0;
 
 
 
@@ -59,8 +66,29 @@ public class Fight extends AppCompatActivity {
         fromActivityFight();
         presentation();
         initialization();
+        selectUstensil();
         round();
 
+    }
+
+    private void selectUstensil(){
+
+        listView = findViewById(R.id.selectWeapon);
+
+        for (int i = 0; i< etchebest.getUstensil().size(); i++){
+            ustensilTable[i] = etchebest.getUstensil().get(i).getName();
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, ustensilTable);
+
+        listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    displayUstensil(i);
+            }
+        });
     }
 
     private void fromActivityFight(){
@@ -79,7 +107,7 @@ public class Fight extends AppCompatActivity {
 
 
 
-                        Uri ustensilView = Uri.parse(etchebest.getUstensil().getPicture());
+                        Uri ustensilView = Uri.parse(etchebest.getUstensil().get(lastPosition).getPicture());
                         Uri cookerView = Uri.parse(etchebest.getPicture());
 
                         Bitmap bitmap = null;
@@ -112,7 +140,7 @@ public class Fight extends AppCompatActivity {
 
 
                         lifeEgg.setText(Integer.toString(randomEgg.getLife()));
-                        ustensilName.setText(etchebest.getUstensil().getName());
+                        ustensilName.setText(etchebest.getUstensil().get(lastPosition).getName());
                         cookerName.setText(etchebest.getName());
                         eggName.setText(randomEgg.getName());
 
@@ -135,28 +163,28 @@ public class Fight extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText(randomEgg.getName() + " does not like your face.");
+                        displayText.setText(randomEgg.getName() + " is" + randomEgg.getRarity());
                     }
                 },
                 3000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText(randomEgg.getName() + " does not like your face.");
+                        displayText.setText(randomEgg.getName() + " got the power." + randomEgg.getPower());
                     }
                 },
                 5000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText( randomEgg.getName() + ". wants your money");
+                        displayText.setText( randomEgg.getName() + ". is going to escape");
                     }
                 },
                 7000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText("You will have to fight to keep your money");
+                        displayText.setText("You will have to cook it to recover your recipe");
                     }
                 },
                 9000);
@@ -197,11 +225,11 @@ public class Fight extends AppCompatActivity {
 
     }
     public void attack() {
-        if (randomEgg.getLife() > etchebest.getUstensil().getAttack()) {
+        if (randomEgg.getLife() > etchebest.getUstensil().get(lastPosition).getAttack()) {
             Random r = new Random();
             int i = r.nextInt(10);
             if (i<5) {
-                randomEgg.setLife(randomEgg.getLife() - etchebest.getUstensil().getAttack());
+                randomEgg.setLife(randomEgg.getLife() - etchebest.getUstensil().get(lastPosition).getAttack());
                 displayText.setText("You attack " + randomEgg.getName() + " and " + randomEgg.getName()+ " takes damages !");
                 lifeEgg.setText(Integer.toString(randomEgg.getLife()));
             }
@@ -245,6 +273,24 @@ public class Fight extends AppCompatActivity {
                     },
                     2000);
         }
+
+    }
+
+    private void displayUstensil(int position){
+        Uri ustensilView = Uri.parse(etchebest.getUstensil().get(position).getPicture());
+        Bitmap bitmap = null;
+        try {
+
+            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), ustensilView);
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+
+        ustensilPicture.setImageBitmap(bitmap);
+        ustensilName.setText(etchebest.getUstensil().get(position).getName());
+        lastPosition = position;
 
     }
 }

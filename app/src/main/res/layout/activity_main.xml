@@ -77,4 +77,14 @@
         app:layout_constraintEnd_toStartOf="@+id/ibDesert"
         app:srcCompat="@drawable/sky" />
 
+    <Button
+        android:id="@+id/easterEggg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
