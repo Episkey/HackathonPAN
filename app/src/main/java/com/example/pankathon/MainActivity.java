@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.ibCastle).setOnClickListener(this);
         findViewById(R.id.ibSky).setOnClickListener(this);
         findViewById(R.id.ibListButton).setOnClickListener(this);
+        findViewById(R.id.ibEasterEgg).setOnClickListener(this);
 
         ustensilInitialisation();
         chiefInitialisation();
@@ -79,7 +80,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 goToListView.putExtra(RETURN_SETTINGS, (Parcelable) settings );
                 startActivity(goToListView);
                 break;
-
+            case R.id.ibEasterEgg:
+                Intent goToEasterEgg = new Intent(MainActivity.this, EasterEgg.class);
+                goToEasterEgg.putExtra(RETURN_SETTINGS, (Parcelable) settings );
+                startActivity(goToEasterEgg);
+                break;
         }
     }
 
