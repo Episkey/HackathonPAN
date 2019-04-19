@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import static com.example.pankathon.MainActivity.COOKER;
@@ -37,10 +38,11 @@ public class Fight extends AppCompatActivity {
     private Settings settings;
     private TextView eggName;
     public static final String RETURN_SETTINGS = "RETURN_SETTINGS";
-
+    private ArrayList<Egg> listFightingEggs;
 
 
     static boolean victory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,32 +53,36 @@ public class Fight extends AppCompatActivity {
         ustensilName = findViewById(R.id.tvUstensilName);
         cookerName = findViewById(R.id.tvCookerName);
         eggPicture = findViewById(R.id.ivEggPicture);
-        cookerPicture =findViewById(R.id.ivCookerPicture);
-        ustensilPicture =findViewById(R.id.ivUstensilPicture);
+        cookerPicture = findViewById(R.id.ivCookerPicture);
+        ustensilPicture = findViewById(R.id.ivUstensilPicture);
         displayText = findViewById(R.id.tvDialog);
         eggName = findViewById(R.id.tvEggName);
 
-        fromActivityFight();
-        presentation();
-        initialization();
-        round();
 
+        fromActivityFight();
+        for (int i = 0; i < 3; i++) {
+            randomEgg = listFightingEggs.get(i);
+            presentation();
+            initialization();
+            round();
+        }
+        Intent goToMainactivity = new Intent(Fight.this, MainActivity.class);
+        goToMainactivity.putExtra(RETURN_SETTINGS, (Parcelable) settings);
+        startActivity(goToMainactivity);
     }
 
-    private void fromActivityFight(){
+    private void fromActivityFight() {
         Intent receiveMainActivity = getIntent();
         settings = receiveMainActivity.getParcelableExtra(SETTINGS);
-        etchebest  = receiveMainActivity.getParcelableExtra(COOKER);
-        randomEgg = receiveMainActivity.getParcelableExtra(EGG);
+        etchebest = receiveMainActivity.getParcelableExtra(COOKER);
+        listFightingEggs = (ArrayList<Egg>) receiveMainActivity.getSerializableExtra("EGG");
     }
 
-    private void initialization(){
-
+    private void initialization() {
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-
 
 
                         Uri ustensilView = Uri.parse(etchebest.getUstensil().getPicture());
@@ -117,7 +123,6 @@ public class Fight extends AppCompatActivity {
                         eggName.setText(randomEgg.getName());
 
 
-
                     }
                 },
                 11000);
@@ -149,7 +154,7 @@ public class Fight extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText( randomEgg.getName() + ". wants your money");
+                        displayText.setText(randomEgg.getName() + ". wants your money");
                     }
                 },
                 7000);
@@ -164,7 +169,7 @@ public class Fight extends AppCompatActivity {
     }
 
 
-    private void round(){
+    private void round() {
 
 
         new android.os.Handler().postDelayed(
@@ -196,20 +201,19 @@ public class Fight extends AppCompatActivity {
 
 
     }
+
     public void attack() {
         if (randomEgg.getLife() > etchebest.getUstensil().getAttack()) {
             Random r = new Random();
             int i = r.nextInt(10);
-            if (i<5) {
+            if (i < 5) {
                 randomEgg.setLife(randomEgg.getLife() - etchebest.getUstensil().getAttack());
-                displayText.setText("You attack " + randomEgg.getName() + " and " + randomEgg.getName()+ " takes damages !");
+                displayText.setText("You attack " + randomEgg.getName() + " and " + randomEgg.getName() + " takes damages !");
                 lifeEgg.setText(Integer.toString(randomEgg.getLife()));
+            } else {
+                displayText.setText("You attack " + randomEgg.getName() + " but " + randomEgg.getName() + " dudges !");
             }
-            else {
-                displayText.setText("You attack " + randomEgg.getName() + " but " + randomEgg.getName()+ " dudges !");
-            }
-        }
-        else {
+        } else {
             lifeEgg.setText(Integer.toString(0));
             Uri eggBroken = Uri.parse("android.resource://com.example.pankathon/drawable/fatality");
             Bitmap bitmap = null;
@@ -228,23 +232,12 @@ public class Fight extends AppCompatActivity {
             new android.os.Handler().postDelayed(
                     new Runnable() {
                         public void run() {
-                                settings.getEggCaught().add(randomEgg);
-                                displayText.setText("You've got a " + randomEgg.getName() + ", congratulations !");
+                            settings.getEggCaught().add(randomEgg);
+                            displayText.setText("You've got a " + randomEgg.getName() + ", congratulations !");
 
-                        }
-                    },
-                    2000);
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-
-                            Intent goToMainactivity = new Intent(Fight.this, MainActivity.class);
-                            goToMainactivity.putExtra(RETURN_SETTINGS, (Parcelable) settings );
-                            startActivity(goToMainactivity);
                         }
                     },
                     2000);
         }
-
     }
 }
