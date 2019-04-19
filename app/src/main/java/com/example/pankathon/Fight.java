@@ -33,12 +33,14 @@ public class Fight extends AppCompatActivity {
     private ImageView cookerPicture;
     private ImageView ustensilPicture;
     private Button ustensilButton;
+    private Button buttonReturn;
     private Cooker etchebest;
     private Egg randomEgg;
     private Settings settings;
     private TextView eggName;
     public static final String RETURN_SETTINGS = "RETURN_SETTINGS";
     private ArrayList<Egg> listFightingEggs;
+    private int currentEgg =0;
 
 
     static boolean victory;
@@ -57,18 +59,23 @@ public class Fight extends AppCompatActivity {
         ustensilPicture = findViewById(R.id.ivUstensilPicture);
         displayText = findViewById(R.id.tvDialog);
         eggName = findViewById(R.id.tvEggName);
+        buttonReturn = findViewById(R.id.buttonReturn);
 
 
         fromActivityFight();
-        for (int i = 0; i < 3; i++) {
-            randomEgg = listFightingEggs.get(i);
-            presentation();
-            initialization();
-            round();
-        }
-        Intent goToMainactivity = new Intent(Fight.this, MainActivity.class);
-        goToMainactivity.putExtra(RETURN_SETTINGS, (Parcelable) settings);
-        startActivity(goToMainactivity);
+        randomEgg = listFightingEggs.get(0);
+        presentation();
+        initialization();
+        round();
+
+        buttonReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToMainactivity = new Intent(Fight.this, MainActivity.class);
+                goToMainactivity.putExtra(RETURN_SETTINGS, (Parcelable) settings);
+                startActivity(goToMainactivity);
+            }
+        });
     }
 
     private void fromActivityFight() {
@@ -180,7 +187,7 @@ public class Fight extends AppCompatActivity {
                     }
 
                 },
-                13000);
+                11000);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -189,7 +196,7 @@ public class Fight extends AppCompatActivity {
                     }
 
                 },
-                15000);
+                13000);
         Button attackUstensil = findViewById(R.id.bAttack);
 
         attackUstensil.setOnClickListener(new View.OnClickListener() {
@@ -228,7 +235,7 @@ public class Fight extends AppCompatActivity {
 
             eggPicture.setImageBitmap(bitmap);
             displayText.setText("You make a fatality on " + randomEgg.getName() + " !");
-            randomEgg.setLife(100);
+
             new android.os.Handler().postDelayed(
                     new Runnable() {
                         public void run() {
