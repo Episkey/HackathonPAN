@@ -93,7 +93,6 @@ public class Fight extends AppCompatActivity {
         randomEgg = listFightingEggs.get(0);
         presentation();
         initialization();
-        selectUstensil();
         round();
 
         buttonReturn.setOnClickListener(new View.OnClickListener() {
@@ -220,6 +219,7 @@ public class Fight extends AppCompatActivity {
     }
 
     private void round(){
+        selectUstensil();
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
