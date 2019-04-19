@@ -8,12 +8,8 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -30,24 +26,25 @@ public class Fight extends AppCompatActivity {
 
 
     private static TextView lifeEgg;
-    private  TextView ustensilName;
+    private TextView ustensilName;
     private TextView cookerName;
     private static TextView displayText;
     private ImageView eggPicture;
     private ImageView cookerPicture;
     private ImageView ustensilPicture;
+    private Button ustensilButton;
+    private Button buttonReturn;
     private Cooker etchebest;
     private Egg randomEgg;
     private Settings settings;
     private TextView eggName;
     public static final String RETURN_SETTINGS = "RETURN_SETTINGS";
-    private String[] ustensilTable = new String[3];
-    private ListView listView;
-    private static int lastPosition = 0;
-
+    private ArrayList<Egg> listFightingEggs;
+    private int currentEgg =0;
 
 
     static boolean victory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,56 +55,44 @@ public class Fight extends AppCompatActivity {
         ustensilName = findViewById(R.id.tvUstensilName);
         cookerName = findViewById(R.id.tvCookerName);
         eggPicture = findViewById(R.id.ivEggPicture);
-        cookerPicture =findViewById(R.id.ivCookerPicture);
-        ustensilPicture =findViewById(R.id.ivUstensilPicture);
+        cookerPicture = findViewById(R.id.ivCookerPicture);
+        ustensilPicture = findViewById(R.id.ivUstensilPicture);
         displayText = findViewById(R.id.tvDialog);
         eggName = findViewById(R.id.tvEggName);
+        buttonReturn = findViewById(R.id.buttonReturn);
+
 
         fromActivityFight();
+        randomEgg = listFightingEggs.get(0);
         presentation();
         initialization();
-        selectUstensil();
         round();
 
-    }
-
-    private void selectUstensil(){
-
-        listView = findViewById(R.id.selectWeapon);
-
-        for (int i = 0; i< etchebest.getUstensil().size(); i++){
-            ustensilTable[i] = etchebest.getUstensil().get(i).getName();
-        }
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, ustensilTable);
-
-        listView.setAdapter(arrayAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        buttonReturn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    displayUstensil(i);
+            public void onClick(View v) {
+                Intent goToMainactivity = new Intent(Fight.this, MainActivity.class);
+                goToMainactivity.putExtra(RETURN_SETTINGS, (Parcelable) settings);
+                startActivity(goToMainactivity);
             }
         });
     }
 
-    private void fromActivityFight(){
+    private void fromActivityFight() {
         Intent receiveMainActivity = getIntent();
         settings = receiveMainActivity.getParcelableExtra(SETTINGS);
-        etchebest  = receiveMainActivity.getParcelableExtra(COOKER);
-        randomEgg = receiveMainActivity.getParcelableExtra(EGG);
+        etchebest = receiveMainActivity.getParcelableExtra(COOKER);
+        listFightingEggs = (ArrayList<Egg>) receiveMainActivity.getSerializableExtra("EGG");
     }
 
-    private void initialization(){
-
+    private void initialization() {
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
 
 
-
-                        Uri ustensilView = Uri.parse(etchebest.getUstensil().get(lastPosition).getPicture());
+                        Uri ustensilView = Uri.parse(etchebest.getUstensil().getPicture());
                         Uri cookerView = Uri.parse(etchebest.getPicture());
 
                         Bitmap bitmap = null;
@@ -140,10 +125,9 @@ public class Fight extends AppCompatActivity {
 
 
                         lifeEgg.setText(Integer.toString(randomEgg.getLife()));
-                        ustensilName.setText(etchebest.getUstensil().get(lastPosition).getName());
+                        ustensilName.setText(etchebest.getUstensil().getName());
                         cookerName.setText(etchebest.getName());
                         eggName.setText(randomEgg.getName());
-
 
 
                     }
@@ -163,28 +147,28 @@ public class Fight extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText(randomEgg.getName() + " is" + randomEgg.getRarity());
+                        displayText.setText(randomEgg.getName() + " does not like your face.");
                     }
                 },
                 3000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText(randomEgg.getName() + " got the power." + randomEgg.getPower());
+                        displayText.setText(randomEgg.getName() + " does not like your face.");
                     }
                 },
                 5000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText( randomEgg.getName() + ". is going to escape");
+                        displayText.setText(randomEgg.getName() + ". wants your money");
                     }
                 },
                 7000);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText("You will have to cook it to recover your recipe");
+                        displayText.setText("You will have to fight to keep your money");
                     }
                 },
                 9000);
@@ -192,7 +176,7 @@ public class Fight extends AppCompatActivity {
     }
 
 
-    private void round(){
+    private void round() {
 
 
         new android.os.Handler().postDelayed(
@@ -203,7 +187,7 @@ public class Fight extends AppCompatActivity {
                     }
 
                 },
-                13000);
+                11000);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -212,7 +196,7 @@ public class Fight extends AppCompatActivity {
                     }
 
                 },
-                15000);
+                13000);
         Button attackUstensil = findViewById(R.id.bAttack);
 
         attackUstensil.setOnClickListener(new View.OnClickListener() {
@@ -224,20 +208,19 @@ public class Fight extends AppCompatActivity {
 
 
     }
+
     public void attack() {
-        if (randomEgg.getLife() > etchebest.getUstensil().get(lastPosition).getAttack()) {
+        if (randomEgg.getLife() > etchebest.getUstensil().getAttack()) {
             Random r = new Random();
             int i = r.nextInt(10);
-            if (i<5) {
-                randomEgg.setLife(randomEgg.getLife() - etchebest.getUstensil().get(lastPosition).getAttack());
-                displayText.setText("You attack " + randomEgg.getName() + " and " + randomEgg.getName()+ " takes damages !");
+            if (i < 5) {
+                randomEgg.setLife(randomEgg.getLife() - etchebest.getUstensil().getAttack());
+                displayText.setText("You attack " + randomEgg.getName() + " and " + randomEgg.getName() + " takes damages !");
                 lifeEgg.setText(Integer.toString(randomEgg.getLife()));
+            } else {
+                displayText.setText("You attack " + randomEgg.getName() + " but " + randomEgg.getName() + " dudges !");
             }
-            else {
-                displayText.setText("You attack " + randomEgg.getName() + " but " + randomEgg.getName()+ " dudges !");
-            }
-        }
-        else {
+        } else {
             lifeEgg.setText(Integer.toString(0));
             Uri eggBroken = Uri.parse("android.resource://com.example.pankathon/drawable/fatality");
             Bitmap bitmap = null;
@@ -252,45 +235,16 @@ public class Fight extends AppCompatActivity {
 
             eggPicture.setImageBitmap(bitmap);
             displayText.setText("You make a fatality on " + randomEgg.getName() + " !");
-            randomEgg.setLife(100);
+
             new android.os.Handler().postDelayed(
                     new Runnable() {
                         public void run() {
-                                settings.getEggCaught().add(randomEgg);
-                                displayText.setText("You've got a " + randomEgg.getName() + ", congratulations !");
+                            settings.getEggCaught().add(randomEgg);
+                            displayText.setText("You've got a " + randomEgg.getName() + ", congratulations !");
 
                         }
                     },
                     2000);
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-
-                            Intent goToMainactivity = new Intent(Fight.this, MainActivity.class);
-                            goToMainactivity.putExtra(RETURN_SETTINGS, (Parcelable) settings );
-                            startActivity(goToMainactivity);
-                        }
-                    },
-                    2000);
         }
-
-    }
-
-    private void displayUstensil(int position){
-        Uri ustensilView = Uri.parse(etchebest.getUstensil().get(position).getPicture());
-        Bitmap bitmap = null;
-        try {
-
-            bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), ustensilView);
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-
-        ustensilPicture.setImageBitmap(bitmap);
-        ustensilName.setText(etchebest.getUstensil().get(position).getName());
-        lastPosition = position;
-
     }
 }

@@ -1,13 +1,11 @@
 package com.example.pankathon;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +22,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Uri whisktUri;
     private String whiskString;
     private Uri etchebestUri;
-    private Ustensil eggOven;
-    private Uri eggOventUri;
-    private String eggOvenString;
-    private Uri panUri;
-    private Ustensil pan;
-    private String panString;
     private String etchebestString;
     private Cooker etchebest;
-    public Settings settings = new Settings(0, null);
+    public Settings settings;
     private Egg randomEgg;
+    private ArrayList<Egg> listFightingEggs = new ArrayList<>();
     public static final String RETURN_SETTINGS = "RETURN_SETTINGS";
 
     @Override
@@ -46,15 +39,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.ibforest).setOnClickListener(this);
         findViewById(R.id.ibCastle).setOnClickListener(this);
         findViewById(R.id.ibSky).setOnClickListener(this);
+        findViewById(R.id.ibListButton).setOnClickListener(this);
 
         ustensilInitialisation();
         chiefInitialisation();
         eggInitialisation();
-        invisibleButton();
-        if (!(settings.getWorld() == 0)) {
+
             Intent intent = getIntent();
             settings = intent.getParcelableExtra(RETURN_SETTINGS);
-
+        if(settings == null) {
+            settings = new Settings(0, null);
         }
     }
 
@@ -73,44 +67,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 toActivityFight(settings);
                 break;
             case R.id.ibCastle:
-                if (settings.getEggCaught().size() > 4) {
-                    settings.setWorld(4);
-                    toActivityFight(settings);
-                    break;
-                }
+                settings.setWorld(4);
+                toActivityFight(settings);
+                break;
             case R.id.ibSky:
                 settings.setWorld(5);
                 toActivityFight(settings);
                 break;
-        }
+            case R.id.ibListButton:
+                Intent goToListView = new Intent(MainActivity.this, ListViewScore.class);
+                goToListView.putExtra(RETURN_SETTINGS, (Parcelable) settings );
+                startActivity(goToListView);
+                break;
 
+        }
     }
 
     private void ustensilInitialisation() {
         whisktUri = Uri.parse("android.resource://com.example.pankathon/drawable/whisk_picture");
         whiskString = whisktUri.toString();
         whisk = new Ustensil("Infernal Whisk", 20, whiskString);
-        eggOventUri = Uri.parse("android.resource://com.example.pankathon/drawable/eggoven");
-        eggOvenString = eggOventUri.toString();
-        eggOven= new Ustensil("Devil Egg Oven", 40, eggOvenString);
-        panUri = Uri.parse("android.resource://com.example.pankathon/drawable/pan");
-        panString = panUri.toString();
-        pan= new Ustensil("Pan of Doom", 35, panString);
     }
 
     private void chiefInitialisation() {
         etchebestUri = Uri.parse("android.resource://com.example.pankathon/drawable/etchebestpicture");
         etchebestString = etchebestUri.toString();
         etchebest = new Cooker("Chief Etchebest", 100, etchebestString, whisk, 45);
-        etchebest.getUstensil().add(eggOven);
-        etchebest.getUstensil().add(pan);
     }
 
     private void eggInitialisation() {
         extractEggs(MainActivity.this, new Helper.EggListener() {
             @Override
             public void onEggLoaded(List<Egg> eggList) {
-                randomEgg = Helper.randomEgg((ArrayList<Egg>) eggList);
+
+                for (int i=0; i<3;i++) {
+                    randomEgg = Helper.randomEgg((ArrayList<Egg>) eggList);
+                    listFightingEggs.add(randomEgg);
+                }
+
+
             }
         });
     }
@@ -119,23 +114,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent toActivityFight = new Intent(MainActivity.this, Fight.class);
         toActivityFight.putExtra(COOKER, (Parcelable) etchebest);
         toActivityFight.putExtra(SETTINGS, (Parcelable) settings);
-        toActivityFight.putExtra(EGG, (Parcelable) randomEgg);
+        toActivityFight.putExtra(EGG, listFightingEggs);
         startActivity(toActivityFight);
-    }
-
-    private void invisibleButton(){
-        Button easterEggg = (Button)findViewById(R.id.easterEggg);
-        easterEggg.setVisibility(View.VISIBLE);
-        easterEggg.setBackgroundColor(Color.TRANSPARENT);
-
-        easterEggg.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
     }
 
     @Override

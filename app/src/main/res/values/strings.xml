@@ -5,4 +5,7 @@
     <string name="castle">castle</string>
     <string name="forest">forest</string>
     <string name="sky">sky</string>
+    <string name="eggwin">eggWin</string>
+    <string name="tvrare">TextView</string>
+    <string name="todo">TODO</string>
 </resources>
