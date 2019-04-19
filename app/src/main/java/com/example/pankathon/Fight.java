@@ -5,16 +5,19 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import static com.example.pankathon.MainActivity.COOKER;
@@ -23,7 +26,6 @@ import static com.example.pankathon.MainActivity.SETTINGS;
 
 public class Fight extends AppCompatActivity {
 
-    private TextView lifeCooker;
     private static TextView lifeEgg;
     private TextView ustensilName;
     private TextView cookerName;
@@ -37,47 +39,71 @@ public class Fight extends AppCompatActivity {
     private Settings settings;
     private TextView eggName;
     public static final String RETURN_SETTINGS = "RETURN_SETTINGS";
-
-
+    private ArrayList<Egg> listFightingEggs;
 
     static boolean victory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
 
-        lifeCooker = findViewById(R.id.tvCookerLife);
         lifeEgg = findViewById(R.id.tvEggLife);
         ustensilName = findViewById(R.id.tvUstensilName);
         cookerName = findViewById(R.id.tvCookerName);
         eggPicture = findViewById(R.id.ivEggPicture);
-        cookerPicture =findViewById(R.id.ivCookerPicture);
-        ustensilPicture =findViewById(R.id.ivUstensilPicture);
+        cookerPicture = findViewById(R.id.ivCookerPicture);
+        ustensilPicture = findViewById(R.id.ivUstensilPicture);
         displayText = findViewById(R.id.tvDialog);
         eggName = findViewById(R.id.tvEggName);
 
-        fromActivityFight();
-        presentation();
-        initialization();
-        round();
+        switch (settings.getWorld()) {
+            case 1:
+                ConstraintLayout backocean = (ConstraintLayout) findViewById(R.id.clforBack);
+                backocean.setBackgroundResource(R.drawable.ocean);
+                break;
+            case 2:
+                ConstraintLayout backdesert = (ConstraintLayout) findViewById(R.id.clforBack);
+                backdesert.setBackgroundResource(R.drawable.desert);
+                break;
+            case 3:
+                ConstraintLayout backforest = (ConstraintLayout) findViewById(R.id.clforBack);
+                backforest.setBackgroundResource(R.drawable.forest);;
+                break;
+            case 4:
+                ConstraintLayout backcastle = (ConstraintLayout) findViewById(R.id.clforBack);
+                backcastle.setBackgroundResource(R.drawable.dark_castle);
+                break;
+            case 5:
+                ConstraintLayout backsky = (ConstraintLayout) findViewById(R.id.clforBack);
+                backsky.setBackgroundResource(R.drawable.sky);
+                break;
+        }
 
+        fromActivityFight();
+        for (int i = 0; i < 3; i++) {
+            randomEgg = listFightingEggs.get(i);
+            presentation();
+            initialization();
+            round();
+        }
+        Intent goToMainactivity = new Intent(Fight.this, MainActivity.class);
+        goToMainactivity.putExtra(RETURN_SETTINGS, (Parcelable) settings);
+        startActivity(goToMainactivity);
     }
 
-    private void fromActivityFight(){
+    private void fromActivityFight() {
         Intent receiveMainActivity = getIntent();
         settings = receiveMainActivity.getParcelableExtra(SETTINGS);
-        etchebest  = receiveMainActivity.getParcelableExtra(COOKER);
-        randomEgg = receiveMainActivity.getParcelableExtra(EGG);
+        etchebest = receiveMainActivity.getParcelableExtra(COOKER);
+        listFightingEggs = (ArrayList<Egg>) receiveMainActivity.getSerializableExtra("EGG");
     }
 
-    private void initialization(){
-
+    private void initialization() {
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-
-
 
                         Uri ustensilView = Uri.parse(etchebest.getUstensil().getPicture());
                         Uri cookerView = Uri.parse(etchebest.getPicture());
@@ -96,7 +122,6 @@ public class Fight extends AppCompatActivity {
 
                         Glide.with(Fight.this).load(randomEgg.getPicture()).into(eggPicture);
 
-
                         bitmap = null;
 
                         try {
@@ -107,16 +132,12 @@ public class Fight extends AppCompatActivity {
 
                             e.printStackTrace();
                         }
-
                         cookerPicture.setImageBitmap(bitmap);
 
-                        lifeCooker.setText(Integer.toString(etchebest.getLife()));
                         lifeEgg.setText(Integer.toString(randomEgg.getLife()));
                         ustensilName.setText(etchebest.getUstensil().getName());
                         cookerName.setText(etchebest.getName());
                         eggName.setText(randomEgg.getName());
-
-
 
                     }
                 },
@@ -149,7 +170,7 @@ public class Fight extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        displayText.setText( randomEgg.getName() + ". wants your money");
+                        displayText.setText(randomEgg.getName() + ". wants your money");
                     }
                 },
                 7000);
@@ -164,7 +185,6 @@ public class Fight extends AppCompatActivity {
     }
 
     private void round(){
-
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -193,22 +213,20 @@ public class Fight extends AppCompatActivity {
             }
         });
 
-
     }
+
     public void attack() {
         if (randomEgg.getLife() > etchebest.getUstensil().getAttack()) {
             Random r = new Random();
             int i = r.nextInt(10);
-            if (i<5) {
+            if (i < 5) {
                 randomEgg.setLife(randomEgg.getLife() - etchebest.getUstensil().getAttack());
-                displayText.setText("You attack " + randomEgg.getName() + " and " + randomEgg.getName()+ " takes damages !");
+                displayText.setText("You attack " + randomEgg.getName() + " and " + randomEgg.getName() + " takes damages !");
                 lifeEgg.setText(Integer.toString(randomEgg.getLife()));
+            } else {
+                displayText.setText("You attack " + randomEgg.getName() + " but " + randomEgg.getName() + " dudges !");
             }
-            else {
-                displayText.setText("You attack " + randomEgg.getName() + " but " + randomEgg.getName()+ " dudges !");
-            }
-        }
-        else {
+        } else {
             lifeEgg.setText(Integer.toString(0));
             Uri eggBroken = Uri.parse("android.resource://com.example.pankathon/drawable/fatality");
             Bitmap bitmap = null;
@@ -227,22 +245,12 @@ public class Fight extends AppCompatActivity {
             new android.os.Handler().postDelayed(
                     new Runnable() {
                         public void run() {
-                                settings.getEggCaught().add(randomEgg);
-                                displayText.setText("You've got a " + randomEgg.getName() + ", congratulations !");
+                            settings.getEggCaught().add(randomEgg);
+                            displayText.setText("You've got a " + randomEgg.getName() + ", congratulations !");
 
                         }
                     },
                     2000);
-            new android.os.Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-
-                            Intent goToMainactivity = new Intent(Fight.this, MainActivity.class);
-                            goToMainactivity.putExtra(RETURN_SETTINGS, (Parcelable) settings );
-                            startActivity(goToMainactivity);
-                        }
-                    },
-                    4000);
         }
     }
 }

@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Cooker etchebest;
     public Settings settings;
     private Egg randomEgg;
+    private ArrayList<Egg> listFightingEggs = new ArrayList<>();
     public static final String RETURN_SETTINGS = "RETURN_SETTINGS";
 
     @Override
@@ -78,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 goToListView.putExtra(RETURN_SETTINGS, (Parcelable) settings );
                 startActivity(goToListView);
                 break;
-
         }
     }
 
@@ -98,8 +98,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         extractEggs(MainActivity.this, new Helper.EggListener() {
             @Override
             public void onEggLoaded(List<Egg> eggList) {
-                randomEgg = Helper.randomEgg((ArrayList<Egg>) eggList);
-                System.out.print(randomEgg.getName());
+
+                for (int i=0; i<3;i++) {
+                    randomEgg = Helper.randomEgg((ArrayList<Egg>) eggList);
+                    listFightingEggs.add(randomEgg);
+                }
+
+
             }
         });
     }
@@ -108,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent toActivityFight = new Intent(MainActivity.this, Fight.class);
         toActivityFight.putExtra(COOKER, (Parcelable) etchebest);
         toActivityFight.putExtra(SETTINGS, (Parcelable) settings);
-        toActivityFight.putExtra(EGG, (Parcelable) randomEgg);
+        toActivityFight.putExtra(EGG, listFightingEggs);
         startActivity(toActivityFight);
     }
 
