@@ -1,10 +1,14 @@
 package com.example.pankathon;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -85,6 +89,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     settings.setWorld(4);
                     if(settings.getEggCaught().size() >= 4) {
                         toActivityFight(settings);
+                    }
+                    else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle("Forbidden !");
+                        builder.setMessage("You haven't enough eggs to go into the castle !");
+                        builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
                     }
                     break;
             case R.id.ibSky:
