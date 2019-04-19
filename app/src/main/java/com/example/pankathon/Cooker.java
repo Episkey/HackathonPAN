@@ -9,22 +9,23 @@ public class Cooker implements Parcelable {
     private String name;
     private int life;
     private String picture;
-    private Ustensil ustensil;
+    private ArrayList<Ustensil> ustensil = new ArrayList<>();
     private int age;
 
     public Cooker(String name, int life, String picture,Ustensil ustensil, int age) {
         this.name = name;
         this.life = life;
         this.picture = picture;
-        this.ustensil = ustensil;
+        this.ustensil.add(ustensil);
         this.age = age;
     }
+
 
     protected Cooker(Parcel in) {
         name = in.readString();
         life = in.readInt();
         picture = in.readString();
-        ustensil = in.readParcelable(Ustensil.class.getClassLoader());
+        ustensil = in.createTypedArrayList(Ustensil.CREATOR);
         age = in.readInt();
     }
 
@@ -40,6 +41,46 @@ public class Cooker implements Parcelable {
         }
     };
 
+    public String getName() {
+        return name;
+    }
+
+    public int getLife() {
+        return life;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public ArrayList<Ustensil> getUstensil() {
+        return ustensil;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public void setUstensil(ArrayList<Ustensil> ustensil) {
+        this.ustensil = ustensil;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -50,51 +91,7 @@ public class Cooker implements Parcelable {
         dest.writeString(name);
         dest.writeInt(life);
         dest.writeString(picture);
-        dest.writeParcelable(ustensil, flags);
+        dest.writeTypedList(ustensil);
         dest.writeInt(age);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getLife() {
-        return life;
-    }
-
-    public void setLife(int life) {
-        this.life = life;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
-    public Ustensil getUstensil() {
-        return ustensil;
-    }
-
-    public void setUstensil(Ustensil ustensil) {
-        this.ustensil = ustensil;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public static Creator<Cooker> getCREATOR() {
-        return CREATOR;
     }
 }
