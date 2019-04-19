@@ -34,12 +34,14 @@ public class Fight extends AppCompatActivity {
     private ImageView cookerPicture;
     private ImageView ustensilPicture;
     private Button ustensilButton;
+    private Button buttonReturn;
     private Cooker etchebest;
     private Egg randomEgg;
     private Settings settings;
     private TextView eggName;
     public static final String RETURN_SETTINGS = "RETURN_SETTINGS";
     private ArrayList<Egg> listFightingEggs;
+    private int currentEgg =0;
 
     static boolean victory;
 
@@ -47,6 +49,7 @@ public class Fight extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fight);
+        ConstraintLayout back = (ConstraintLayout) findViewById(R.id.clforBack);
 
         lifeEgg = findViewById(R.id.tvEggLife);
         ustensilName = findViewById(R.id.tvUstensilName);
@@ -56,40 +59,39 @@ public class Fight extends AppCompatActivity {
         ustensilPicture = findViewById(R.id.ivUstensilPicture);
         displayText = findViewById(R.id.tvDialog);
         eggName = findViewById(R.id.tvEggName);
+        buttonReturn = findViewById(R.id.buttonReturn);
 
-        switch (settings.getWorld()) {
-            case 1:
-                ConstraintLayout backocean = (ConstraintLayout) findViewById(R.id.clforBack);
-                backocean.setBackgroundResource(R.drawable.ocean);
-                break;
-            case 2:
-                ConstraintLayout backdesert = (ConstraintLayout) findViewById(R.id.clforBack);
-                backdesert.setBackgroundResource(R.drawable.desert);
-                break;
-            case 3:
-                ConstraintLayout backforest = (ConstraintLayout) findViewById(R.id.clforBack);
-                backforest.setBackgroundResource(R.drawable.forest);;
-                break;
-            case 4:
-                ConstraintLayout backcastle = (ConstraintLayout) findViewById(R.id.clforBack);
-                backcastle.setBackgroundResource(R.drawable.dark_castle);
-                break;
-            case 5:
-                ConstraintLayout backsky = (ConstraintLayout) findViewById(R.id.clforBack);
-                backsky.setBackgroundResource(R.drawable.sky);
-                break;
-        }
+
 
         fromActivityFight();
-        for (int i = 0; i < 3; i++) {
-            randomEgg = listFightingEggs.get(i);
-            presentation();
-            initialization();
-            round();
+        if(settings.getWorld() == 1) {
+            back.setBackgroundResource(R.drawable.ocean);
         }
-        Intent goToMainactivity = new Intent(Fight.this, MainActivity.class);
-        goToMainactivity.putExtra(RETURN_SETTINGS, (Parcelable) settings);
-        startActivity(goToMainactivity);
+        if(settings.getWorld() == 2) {
+            back.setBackgroundResource(R.drawable.desert);
+        }
+        if(settings.getWorld() == 3) {
+            back.setBackgroundResource(R.drawable.forest);
+        }
+        if(settings.getWorld() == 4) {
+            back.setBackgroundResource(R.drawable.dark_castle);
+        }
+        if(settings.getWorld() == 5) {
+            back.setBackgroundResource(R.drawable.sky);
+        }
+        randomEgg = listFightingEggs.get(0);
+        presentation();
+        initialization();
+        round();
+
+        buttonReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToMainactivity = new Intent(Fight.this, MainActivity.class);
+                goToMainactivity.putExtra(RETURN_SETTINGS, (Parcelable) settings);
+                startActivity(goToMainactivity);
+            }
+        });
     }
 
     private void fromActivityFight() {
@@ -194,7 +196,7 @@ public class Fight extends AppCompatActivity {
                     }
 
                 },
-                13000);
+                11000);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
@@ -203,7 +205,7 @@ public class Fight extends AppCompatActivity {
                     }
 
                 },
-                15000);
+                13000);
         Button attackUstensil = findViewById(R.id.bAttack);
 
         attackUstensil.setOnClickListener(new View.OnClickListener() {
@@ -241,7 +243,7 @@ public class Fight extends AppCompatActivity {
 
             eggPicture.setImageBitmap(bitmap);
             displayText.setText("You make a fatality on " + randomEgg.getName() + " !");
-            randomEgg.setLife(100);
+
             new android.os.Handler().postDelayed(
                     new Runnable() {
                         public void run() {
